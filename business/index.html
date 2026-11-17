@@ -138,8 +138,6 @@
   })();
 
   businessCard.addEventListener('change', () => {
-    const picked = [...form.querySelectorAll('input[name="availability"]:checked')].map(i => i.value);
-    if (!picked.length) { errorMsg.textContent = '請至少勾選一個可參加的場次。'; errorMsg.classList.add('show'); document.getElementById('dateOptions').scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
     const file = businessCard.files && businessCard.files[0];
     if (!file) { cardPreview.style.display = 'none'; return; }
     cardImage.src = URL.createObjectURL(file);
