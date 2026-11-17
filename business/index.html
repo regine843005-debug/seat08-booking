@@ -21,6 +21,10 @@
     footer{background:#312c27;color:#f8eee1;padding:29px 28px}.foot{max-width:1164px;margin:auto;display:flex;justify-content:space-between;gap:18px;font-size:13px}.foot span{color:#cbbcae}.foot a{color:#f8eee1}
     @media(max-width:820px){.hero{grid-template-columns:1fr;gap:40px;padding:36px 20px 70px}.topbar{padding:16px 20px}.nav{gap:12px}.flow{overflow:auto;justify-content:flex-start;padding:18px 20px}.flow-arrow{display:none}.flow-item{white-space:nowrap}.section{padding:76px 20px}.vcp-grid{grid-template-columns:1fr}.method .section,.form-layout{grid-template-columns:1fr;gap:30px}.form-layout{padding:76px 20px 86px}.foot{flex-direction:column}.row{grid-template-columns:1fr;gap:0}}
     @media(max-width:480px){.hero h1{font-size:55px}.hero-copy{font-size:16px}.brand img{height:50px}.nav{display:none}.poster:before{inset:12px -8px -8px 12px}form{padding:25px 19px}}
+      html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+    @media(max-width:820px){.flow{flex-wrap:wrap;overflow:visible;gap:10px 18px}.flow-item{white-space:normal}}
+    @media(max-width:480px){.flow{display:grid;grid-template-columns:1fr;gap:8px;padding:16px 20px}.hero h1{font-size:clamp(40px,13vw,55px)}.section-head h2,.form-intro h2{font-size:clamp(30px,9vw,40px);word-break:break-word}input,select,textarea{font-size:16px}input::placeholder,textarea::placeholder{font-size:14px}select{text-overflow:ellipsis}.dates{grid-template-columns:repeat(auto-fill,minmax(70px,1fr))}.date-opt{white-space:normal;padding:7px 4px}.vcp small{position:static;display:block;text-align:right;margin-top:10px}.vcp{min-height:0}.method-card{flex-direction:column;gap:4px}}
+    .ph-hint{display:block;color:var(--muted);font-size:12px;margin-top:4px}
   </style>
 </head>
 <body>
@@ -36,7 +40,7 @@
 2. 例如：需要品牌重整的中小企業主
 3. ……"></textarea><span class="hint">可以填「最希望認識的五種顧客」，也可以填「最近接觸過的五位顧客」；每位一至兩句即可。</span></div><div class="field"><label for="expertise">三個專長或證照 <span class="req">*</span></label><textarea id="expertise" name="expertise" required placeholder="1. 專長／證照一：
 2. 專長／證照二：
-3. 專長／證照三："></textarea><span class="hint">請填寫最能代表你專業可信度的三項，可包含專業技能、服務經驗或正式證照。</span></div></div><div class="part"><h3>04｜交流偏好與安排 <span>幫助我們安排適合的場次</span></h3><div class="field"><label>可參加的場次 <span class="req">*</span></label><span class="hint" style="margin:-2px 0 10px">皆為週二晚上 18:00–20:30，可複選，每個日期各算一筆報名。</span><div class="dates" id="dateOptions"></div></div><div class="field"><label>可接受當日補位的日期</label><span class="hint" style="margin:-2px 0 10px">若當天有空位，會在當日下午 14:30 通知你補位，可複選（選填），每個日期各算一筆候補。同一天已勾報名的不用再勾。</span><div class="dates" id="standbyOptions"></div></div><div class="pair-box pair-only"><b>希望一起上餐桌的人（選填）</b><div class="row"><div class="field"><label for="partnerName">全名</label><input id="partnerName" name="partnerName" placeholder="例如：林小美"></div><div class="field"><label for="partnerPhone">電話</label><input id="partnerPhone" name="partnerPhone" type="tel" inputmode="tel" pattern="[0-9+\-\s()]{8,20}" placeholder="例如：0912-345-678"></div></div><span class="hint">對方也需要自己填一份申請表並完成繳費，我們會盡量安排你們同桌。</span></div><div class="fee" id="feeBox"></div><div class="field"><label for="format">偏好的交流形式</label><select id="format" name="format"><option value="">請選擇</option><option>1對1換位交流</option><option>個別議題共同交流，最後留20分鐘1對1交流</option><option>其他</option></select><div id="formatOtherWrap" style="display:none;margin-top:8px"><input id="formatOther" name="formatOther" placeholder="請說明你偏好的交流形式"></div></div><div class="field"><label for="expectation">你希望這次交流結束時，帶走什麼？</label><textarea id="expectation" name="expectation" placeholder="例如：一個新的合作方向、一位值得深交的夥伴、對商會更清楚的理解……"></textarea></div><div class="field"><label for="diet">飲食需求或需要主辦人事前知道的事情</label><input id="diet" name="diet" placeholder="無、素食、過敏，或其他安排需求"></div></div><div class="important pair-only" style="margin:0 0 18px"><b>兩人同行說明</b>・兩人都完成報名並繳費，每人每場以 $950 計。請先依單人價繳費，差額於活動當天現場退還。<br>・若其中一人未完成繳費，仍以單人價計算。<br>・若有人依退費規定取消，退費以原價計算。<br>・若當天臨時不出席且無人遞補（無法退費），同行的另一人仍享兩人同行優惠價。</div><label class="check"><input type="checkbox" required><span>我了解這是一份邀請制交流申請，送出資料不代表錄取；我同意主辦人為審核、媒合、活動通知與後續引薦品質追蹤而使用上述資料。 <span class="req">*</span></span></label><button class="btn primary submit" type="submit">送出交流申請 <span>→</span></button><div class="success" id="success" role="status"></div><div class="error" id="errorMsg" role="alert"></div></form></div></section>
+3. 專長／證照三："></textarea><span class="hint">請填寫最能代表你專業可信度的三項，可包含專業技能、服務經驗或正式證照。</span></div></div><div class="part"><h3>04｜交流偏好與安排 <span>幫助我們安排適合的場次</span></h3><div class="field"><label>可參加的場次 <span class="req">*</span></label><span class="hint" style="margin:-2px 0 10px">皆為週二晚上 18:00–20:30，可複選，每個日期各算一筆報名。</span><div class="dates" id="dateOptions"></div></div><div class="field"><label>可接受當日補位的日期</label><span class="hint" style="margin:-2px 0 10px">若當天有空位，會在當日下午 14:30 通知你補位，可複選（選填），每個日期各算一筆候補。同一天已勾報名的不用再勾。</span><div class="dates" id="standbyOptions"></div></div><div class="pair-box pair-only"><b>希望一起上餐桌的人（選填）</b><div class="row"><div class="field"><label for="partnerName">全名</label><input id="partnerName" name="partnerName" placeholder="例如：林小美"></div><div class="field"><label for="partnerPhone">電話</label><input id="partnerPhone" name="partnerPhone" type="tel" inputmode="tel" pattern="[0-9+\-\s()]{8,20}" placeholder="例如：0912-345-678"></div></div><span class="hint">對方也需要自己填一份申請表並完成繳費，我們會盡量安排你們同桌。</span></div><div class="fee" id="feeBox"></div><div class="field"><label for="format">偏好的交流形式</label><select id="format" name="format"><option value="">請選擇</option><option>1對1換位交流</option><option value="個別議題共同交流，最後留20分鐘1對1交流">議題交流＋最後 20 分鐘 1對1</option><option>其他</option></select><span class="hint">議題交流：先就個別議題共同交流，最後留 20 分鐘 1 對 1 交流。</span><div id="formatOtherWrap" style="display:none;margin-top:8px"><input id="formatOther" name="formatOther" placeholder="請說明你偏好的交流形式"></div></div><div class="field"><label for="expectation">你希望這次交流結束時，帶走什麼？</label><textarea id="expectation" name="expectation" placeholder="例如：一個新的合作方向、一位值得深交的夥伴、對商會更清楚的理解……"></textarea></div><div class="field"><label for="diet">飲食需求或需要主辦人事前知道的事情</label><input id="diet" name="diet" placeholder="無、素食、過敏，或其他安排需求"></div></div><div class="important pair-only" style="margin:0 0 18px"><b>兩人同行說明</b>・兩人都完成報名並繳費，每人每場以 $950 計。請先依單人價繳費，差額於活動當天現場退還。<br>・若其中一人未完成繳費，仍以單人價計算。<br>・若有人依退費規定取消，退費以原價計算。<br>・若當天臨時不出席且無人遞補（無法退費），同行的另一人仍享兩人同行優惠價。</div><label class="check"><input type="checkbox" required><span>我了解這是一份邀請制交流申請，送出資料不代表錄取；我同意主辦人為審核、媒合、活動通知與後續引薦品質追蹤而使用上述資料。 <span class="req">*</span></span></label><button class="btn primary submit" type="submit">送出交流申請 <span>→</span></button><div class="success" id="success" role="status"></div><div class="error" id="errorMsg" role="alert"></div></form></div></section>
   </main>
   <footer><div class="foot"><strong>第八個座位 SEAT 08</strong><span>好放心飲食行銷有限公司・電話 <a href="tel:0920090616">0920-090-616</a>・統一編號 60703839</span></div></footer>
 </div>
@@ -194,6 +198,30 @@
       submitBtn.disabled = false; submitBtn.innerHTML = btnText;
     }
   });
+</script>
+<script>
+(function(){
+  function fit(){
+    var cv=document.createElement('canvas').getContext('2d');
+    document.querySelectorAll('input[placeholder]').forEach(function(el){
+      if(el.dataset.phDone||el.offsetParent===null&&el.closest('#formatOtherWrap,.pair-box')==null) return;
+      var cs=getComputedStyle(el); cv.font=cs.fontSize+' '+cs.fontFamily;
+      var w=el.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight);
+      if(w>0&&cv.measureText(el.placeholder).width>w){
+        var h=document.createElement('span');h.className='ph-hint';h.textContent=el.placeholder;
+        el.insertAdjacentElement('afterend',h); el.placeholder='請填寫'; el.dataset.phDone=1;
+      }
+    });
+    document.querySelectorAll('textarea').forEach(function(t){
+      if(t.value) return; t.style.height='auto';
+      var v=t.value; t.value=t.placeholder; var h=t.scrollHeight+2; t.value=v;
+      t.style.height=Math.max(h,92)+'px';
+    });
+  }
+  document.addEventListener('input',function(e){var t=e.target;if(t.tagName==='TEXTAREA'){t.style.height='auto';t.style.height=Math.max(t.scrollHeight+2,92)+'px';}});
+  if(document.readyState!=='loading') setTimeout(fit,50); else document.addEventListener('DOMContentLoaded',function(){setTimeout(fit,50)});
+  window.addEventListener('load',fit);
+})();
 </script>
 </body>
 </html>
