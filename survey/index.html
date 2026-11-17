@@ -47,14 +47,13 @@
     <div class="q"><span class="qt"><b>1</b>今天參加的是 <span class="req">*</span></span>
       <div class="ev-pick chips"><label class="chip"><input type="radio" name="eventId" value="seat08_business" required>商業交流餐會</label><label class="chip"><input type="radio" name="eventId" value="seat08_resonance">同頻餐桌會</label></div>
       <div class="row" style="margin-top:12px"><div class="field" style="margin:0"><label for="date" style="font-size:13px">場次日期</label><input id="date" type="date" required></div></div>
-      <div style="margin-top:12px"><label for="name" style="font-size:13px;font-weight:800;display:block;margin-bottom:6px">我是 <span class="req">*</span></label><select id="name" name="name" required><option value="">請先選擇活動與日期</option></select>
-      <input id="nameOther" placeholder="請輸入你的姓名" style="display:none;margin-top:8px"></div></div>
+      <div style="margin-top:12px"><label for="name" style="font-size:13px;font-weight:800;display:block;margin-bottom:6px">你的姓名 <span class="req">*</span></label><input id="name" name="name" required autocomplete="name" placeholder="例如：王小明"></div></div>
     <div class="q"><span class="qt"><b>2</b>今天的整體滿意度 <span class="req">*</span></span><div class="stars" data-name="overall"></div></div>
-    <div class="q"><span class="qt"><b>3</b>今天跟誰交流最多？</span><div class="chips people" data-name="talkedMost" data-type="radio"></div></div>
-    <div class="q"><span class="qt"><b>4</b>會後最想再跟誰深入交流？（可複選）</span><div class="chips people" data-name="followUp" data-type="checkbox"></div>
+    <div class="q"><span class="qt"><b>3</b>今天跟誰交流最多？</span><input name="talkedMost" placeholder="請填寫對方姓名"></div>
+    <div class="q"><span class="qt"><b>4</b>會後最想再跟誰深入交流？（可填多位）</span><input name="followUp" placeholder="請填寫對方姓名，多位請用頓號分開">
       <span class="note" style="margin:10px 0 6px">想聊什麼？</span><div class="chips" data-name="followTopic" data-type="checkbox" data-opts="談合作|轉介紹|請教專業|交個朋友"></div></div>
     <div class="q"><span class="qt"><b>5</b>對哪些交流主題有興趣？（可複選）</span><div class="chips" data-name="topics" data-type="checkbox" data-opts="品牌行銷|合作與轉介紹|創業經驗|財務資金|健康養生|親子教育|飲食與料理|其他"></div></div>
-    <div class="q"><span class="qt"><b>6</b>今天交流起來最不順暢的是？（選填）</span><div class="chips people" data-name="notSmooth" data-type="radio" data-extra="沒有"></div><span class="note">只有主辦人看得到，用來調整下次的座位安排。</span></div>
+    <div class="q"><span class="qt"><b>6</b>今天交流起來最不順暢的是？（選填）</span><input name="notSmooth" placeholder="請填寫對方姓名，沒有可留空"><span class="note">只有主辦人看得到，用來調整下次的座位安排。</span></div>
     <div class="q"><span class="qt"><b>7</b>餐點滿意度 <span class="req">*</span></span><div class="stars" data-name="food"></div></div>
     <div class="q"><span class="qt"><b>8</b>精油老師滿意度</span><div class="stars" data-name="oil"></div><label class="chip muted-chip" style="margin-top:8px;display:inline-flex"><input type="checkbox" id="noOil">本場沒有精油老師</label></div>
     <div class="q"><span class="qt"><b>9</b>主持人滿意度 <span class="req">*</span></span><div class="stars" data-name="host"></div></div>
@@ -89,42 +88,9 @@
   if (ev) form.querySelector('input[name=eventId][value=' + ev + ']').checked = true;
   document.getElementById('date').value = qs.get('d') || iso(new Date());
 
-  // 同桌名單
-  const nameSel = document.getElementById('name'), nameOther = document.getElementById('nameOther');
-  let roster = [], loaded = false;
-  async function loadRoster() {
-    const e = (form.querySelector('input[name=eventId]:checked') || {}).value;
-    const dv = document.getElementById('date').value;
-    if (!e || !dv) return;
-    const [y, m, d] = dv.split('-').map(Number);
-    nameSel.innerHTML = '<option value="">名單讀取中…</option>';
-    try {
-      const r = await fetch(WEBAPP_URL + '?action=attendees&event=' + e + '&date=' + encodeURIComponent(y + '/' + m + '/' + d + '（')).then(x => x.json());
-      roster = r.names || [];
-    } catch (x) { roster = []; }
-    loaded = true;
-    nameSel.innerHTML = '<option value="">請選擇你的名字</option>' + roster.map(n => '<option>' + esc(n) + '</option>').join('') + '<option value="__other">名單上沒有我</option>';
-    renderPeople();
-  }
-  function renderPeople() {
-    const me = nameSel.value;
-    const others = roster.filter(n => n !== me);
-    document.querySelectorAll('.chips.people').forEach(b => {
-      if (!others.length) {
-        b.innerHTML = loaded && !roster.length
-          ? '<input name="' + b.dataset.name + '" placeholder="請輸入對方姓名' + (b.dataset.type === 'checkbox' ? '，多位請用頓號分開' : '') + '">'
-          : '<span class="note">選好活動、日期和你的名字後，這裡會出現同桌名單。</span>';
-        return;
-      }
-      fillChips(b, others.concat(b.dataset.extra ? [b.dataset.extra] : []));
-    });
-  }
   form.addEventListener('change', e => {
-    if (e.target.name === 'eventId' || e.target.id === 'date') loadRoster();
-    if (e.target.id === 'name') { nameOther.style.display = nameSel.value === '__other' ? 'block' : 'none'; nameOther.required = nameSel.value === '__other'; renderPeople(); }
     if (e.target.id === 'noOil') form.querySelectorAll('input[name=oil]').forEach(i => { i.checked = false; i.disabled = e.target.checked; });
   });
-  loadRoster(); renderPeople();
 
   form.addEventListener('submit', async e => {
     e.preventDefault();
@@ -136,9 +102,9 @@
     const [y, m, d] = document.getElementById('date').value.split('-').map(Number);
     const payload = {
       action: 'seat08Survey', eventId: fd.get('eventId'), date: y + '/' + m + '/' + d,
-      name: nameSel.value === '__other' ? nameOther.value.trim() : nameSel.value,
-      overall: fd.get('overall'), talkedMost: all('talkedMost'), followUp: all('followUp'), followTopic: all('followTopic'),
-      topics: all('topics'), notSmooth: all('notSmooth'), food: fd.get('food'),
+      name: (fd.get('name') || '').trim(),
+      overall: fd.get('overall'), talkedMost: (fd.get('talkedMost') || '').trim(), followUp: (fd.get('followUp') || '').trim(), followTopic: all('followTopic'),
+      topics: all('topics'), notSmooth: (fd.get('notSmooth') || '').trim(), food: fd.get('food'),
       oil: document.getElementById('noOil').checked ? '本場沒有' : (fd.get('oil') || ''), host: fd.get('host'), advice: fd.get('advice') || '',
     };
     btn.disabled = true; const t = btn.innerHTML; btn.innerHTML = '送出中…';
