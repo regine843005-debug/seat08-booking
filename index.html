@@ -121,6 +121,15 @@
     font-size:13px;color:var(--gold);letter-spacing:0;
   }
 
+  .divider{
+    width:min(76vw, 300px);
+    display:flex;align-items:center;gap:12px;
+    margin:14px 0 -2px;
+    color:var(--green);font-size:14px;font-weight:700;letter-spacing:0.3em;
+  }
+  .divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--gold);}
+  .divider span{padding-left:0.3em;white-space:nowrap;}
+
   /* ── 頁尾 ── */
   footer{
     margin:44px auto 0;
@@ -154,34 +163,37 @@
 
   <div class="heading">
     <div class="en">THE EIGHTH SEAT</div>
-    <h1>三種餐桌</h1>
+    <h1>兩種餐桌</h1>
     <div class="ornament">◆</div>
   </div>
 
   <nav class="menu">
     <a class="card" href="https://liff.line.me/2011023659-9wH5wZ0v">
       <img src="images/business.jpg" alt="商業交流餐會">
-      <span class="cta"><span class="no">I</span>點選看內容<span class="arrow">→</span></span>
+      <span class="cta">點選看內容<span class="arrow">→</span></span>
     </a>
     <a class="card" href="https://liff.line.me/2011023659-akfCqF26">
       <img src="images/resonance.jpg" alt="同頻餐桌會">
-      <span class="cta"><span class="no">II</span>點選看內容<span class="arrow">→</span></span>
-    </a>
-    <a class="card" href="https://liff.line.me/2011023659-lpKqmXIF">
-      <img src="images/hotpot.jpg" alt="就愛吃火鍋 預約包場">
-      <span class="cta"><span class="no">III</span>點選看內容<span class="arrow">→</span></span>
+      <span class="cta">點選看內容<span class="arrow">→</span></span>
     </a>
     <a class="card" href="survey/">
       <img src="images/survey.jpg" alt="參加者滿意度調查：感謝入座・留下回饋">
-      <span class="cta"><span class="no">IV</span>點選填寫<span class="arrow">→</span></span>
+      <span class="cta">點選填寫<span class="arrow">→</span></span>
+    </a>
+
+    <div class="divider"><span>鍋物相關系列</span></div>
+
+    <a class="card" href="https://liff.line.me/2011023659-lpKqmXIF">
+      <img src="images/hotpot.jpg" alt="就愛吃火鍋 預約包場">
+      <span class="cta">點選看內容<span class="arrow">→</span></span>
     </a>
     <a class="card" href="https://liff.line.me/2010286983-KluFiWkX">
       <img src="images/hotpot-home.jpg" alt="想要把火鍋帶回家：姚家老火慢淬雞湯">
-      <span class="cta"><span class="no">V</span>想要把火鍋帶回家<span class="arrow">→</span></span>
+      <span class="cta">想要把火鍋帶回家<span class="arrow">→</span></span>
     </a>
     <a class="card" href="https://liff.line.me/2010286983-KluFiWkX">
       <img src="images/ambassador-square.svg" alt="我想擔任鍋物推薦大使">
-      <span class="cta"><span class="no">VI</span>我想擔任鍋物推薦大使<span class="arrow">→</span></span>
+      <span class="cta">我想擔任鍋物推薦大使<span class="arrow">→</span></span>
     </a>
   </nav>
 
